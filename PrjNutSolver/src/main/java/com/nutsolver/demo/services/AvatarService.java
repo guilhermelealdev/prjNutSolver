@@ -4,9 +4,6 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import com.nutsolver.demo.entities.Avatar;
 import com.nutsolver.demo.repositories.AvatarRepository;
@@ -21,7 +18,7 @@ public class AvatarService {
 		this.avatarRepository = avatarRepository;
 	}
 	
-	@PostMapping("/salvar")
+	
 	public Avatar salvarAvatar(Avatar avatar) {
 		return avatarRepository.save(avatar);
 	}
@@ -33,19 +30,20 @@ public class AvatarService {
 	public void deletarAvatarPorId(Long idAvatar) {
 		avatarRepository.deleteById(idAvatar);
 	}
-
-	public Avatar atualizarAvatarById(@PathVariable Long idAvatar,@RequestBody Avatar avatarAtualizado) {
+	
+	public Avatar atualizarAvatarById(Long idAvatar, Avatar avatarAtualizado) {
 		
-		Optional<Avatar> avatarOptional = avatarRepository.findById(idAvatar);
-
-		if (avatarOptional.isPresent()) {
-			
+		Optional<Avatar>  avatarOptional = avatarRepository.findById(idAvatar);
+		
+		if(avatarOptional.isPresent()) {
 			Avatar avatar = avatarOptional.get();
-
+			
 			avatar.setImagem(avatarAtualizado.getImagem());
+			avatar.setUsuario(avatarAtualizado.getUsuario());
 			
 			return avatarRepository.save(avatar);
-		} else {
+			
+		}else {
 			return null;
 		}
 	}
