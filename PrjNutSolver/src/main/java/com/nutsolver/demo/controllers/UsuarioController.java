@@ -27,8 +27,8 @@ public class UsuarioController {
 		this.usuarioService = usuarioService;
 	}
 
-	@PostMapping("/criar")
-	public Usuario CriarUsuario(@PathVariable Usuario usuario) {
+	@PostMapping("/salvar")
+	public Usuario CriarUsuario(@RequestBody Usuario usuario) {
 		return usuarioService.salvarUsuario(usuario);
 	}
 
@@ -41,7 +41,8 @@ public class UsuarioController {
 	public void DeletarUsuarioPorId(@PathVariable Long idUsuario) {
 		usuarioService.deletarUsuarioById(idUsuario);
 	}
-
+	
+	@GetMapping
 	public List<Usuario> ListarTodosUsuarios() {
 		return usuarioService.listarUsuarios();
 	}
@@ -49,6 +50,17 @@ public class UsuarioController {
 	@PutMapping("/atualizar/{idUsuario}")
 	public ResponseEntity<Usuario> AtualizarUsuario(@PathVariable Long idUsuario, @RequestBody Usuario usuario) {
 		Usuario atualizado = usuarioService.atualizarUsuarioById(idUsuario, usuario);
+		
+		if (atualizado != null) {
+			return ResponseEntity.ok(atualizado);
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	}
+	
+	@PutMapping("/nozes/{idUsuario}")
+	public ResponseEntity<Usuario> AtualizarNozes(@PathVariable Long idUsuario, @RequestBody Usuario usuario) {
+		Usuario atualizado = usuarioService.atualizarNozes(idUsuario, usuario);
 		
 		if (atualizado != null) {
 			return ResponseEntity.ok(atualizado);

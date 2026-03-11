@@ -5,12 +5,6 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import com.nutsolver.demo.entities.Usuario;
 import com.nutsolver.demo.repositories.UsuarioRepository;
@@ -58,6 +52,22 @@ public class UsuarioService {
 			usuario.setNozes(usuarioAtualizado.getNozes());
 			usuario.setSenha(usuarioAtualizado.getSenha());
 			usuario.setUsername(usuarioAtualizado.getUsername());
+			
+			return usuarioRepository.save(usuario);
+		}else {
+			return null;
+		}
+		
+	}
+	
+	public Usuario atualizarNozes(Long idUsuario, Usuario usuarioAtualizado) {
+		
+		Optional<Usuario>  usuarioOptional = usuarioRepository.findById(idUsuario);
+		
+		if(usuarioOptional.isPresent()) {
+			Usuario usuario = usuarioOptional.get();
+			
+			usuario.setNozes(usuarioAtualizado.getNozes());
 			
 			return usuarioRepository.save(usuario);
 		}else {
