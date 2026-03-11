@@ -39,7 +39,6 @@ public class AvatarService {
 			Avatar avatar = avatarOptional.get();
 			
 			avatar.setImagem(avatarAtualizado.getImagem());
-			avatar.setUsuario(avatarAtualizado.getUsuario());
 			
 			return avatarRepository.save(avatar);
 			
