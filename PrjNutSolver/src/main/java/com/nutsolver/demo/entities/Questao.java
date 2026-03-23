@@ -1,9 +1,13 @@
 package com.nutsolver.demo.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -14,17 +18,29 @@ public class Questao {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idQuestao;
 
+	@ManyToOne
+	@JoinColumn(name = "fase_id")
+	@JsonBackReference
+	private Fase fase;
+
 	private String materia;
 	private String alternativaA;
 	private String alternativaB;
 	private String alternativaC;
 	private String alternativaD;
 	private String resposta;
-	private int valor;
+	private String enunciado;
+	private Integer valor;
 
-	public Questao(Long idQuestao, String materia, String alternativaA, String alternativaB, String alternativaC,
-			String alternativaD, String resposta, int valor) {
+	public Questao() {
+
+	}
+
+	public Questao(Long idQuestao, Fase fase, String materia, String alternativaA, String alternativaB,
+			String alternativaC, String alternativaD, String resposta, int valor, String enunciado) {
+		super();
 		this.idQuestao = idQuestao;
+		this.fase = fase;
 		this.materia = materia;
 		this.alternativaA = alternativaA;
 		this.alternativaB = alternativaB;
@@ -32,18 +48,23 @@ public class Questao {
 		this.alternativaD = alternativaD;
 		this.resposta = resposta;
 		this.valor = valor;
-	}
-
-	public int getValor() {
-		return valor;
-	}
-
-	public void setValor(int valor) {
-		this.valor = valor;
+		this.enunciado = enunciado;
 	}
 
 	public Long getIdQuestao() {
 		return idQuestao;
+	}
+
+	public void setIdQuestao(Long idQuestao) {
+		this.idQuestao = idQuestao;
+	}
+
+	public Fase getFase() {
+		return fase;
+	}
+
+	public void setFase(Fase fase) {
+		this.fase = fase;
 	}
 
 	public String getMateria() {
@@ -93,5 +114,23 @@ public class Questao {
 	public void setResposta(String resposta) {
 		this.resposta = resposta;
 	}
+
+	public String getEnunciado() {
+		return enunciado;
+	}
+
+	public void setEnunciado(String enunciado) {
+		this.enunciado = enunciado;
+	}
+
+	public Integer getValor() {
+		return valor;
+	}
+
+	public void setValor(Integer valor) {
+		this.valor = valor;
+	}
+
+	
 
 }
